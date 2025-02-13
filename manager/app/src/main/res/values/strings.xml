@@ -109,7 +109,9 @@
     <string name="app_profile_template_import_empty">Clipboard is empty!</string>
     <string name="module_changelog_failed">Fetch changelog failed: %s</string>
     <string name="settings_check_update">Check update</string>
-    <string name="settings_check_update_summary">Automatically check for updates when opening the app</string>
+    <string name="settings_check_update_summary">Automatically check for updates when opening the app</string>    <string name="settings_night_mode_follow_sys">Follow System\'s Dark Theme</string>
+    <string name="settings_night_mode_follow_sys_summary">Automatically switch to dark theme with system\'s setting</string>
+    <string name="settings_night_theme_enabled">Enable Dark Theme</string>
     <string name="grant_root_failed">Failed to grant root!</string>
     <string name="action">Action</string>
     <string name="open">Open</string>
