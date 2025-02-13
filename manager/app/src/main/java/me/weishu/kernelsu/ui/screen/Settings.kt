@@ -26,7 +26,6 @@ import androidx.compose.material.icons.filled.Compress
 import androidx.compose.material.icons.filled.ContactPage
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material.icons.filled.FormatColorFill
 import androidx.compose.material.icons.filled.InvertColors
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DeveloperMode
