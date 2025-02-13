@@ -1,5 +1,6 @@
 package me.weishu.kernelsu.ui.theme
 
+import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -24,11 +25,18 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun KernelSUTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
+    val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    val darkTheme = if (prefs.getBoolean("night_mode_follow_sys", true)) {
+        isSystemInDarkTheme()
+    } else {
+        prefs.getBoolean("night_mode_enabled", false)
+    }
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current

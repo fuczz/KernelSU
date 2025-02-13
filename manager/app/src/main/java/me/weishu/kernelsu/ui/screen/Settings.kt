@@ -1,5 +1,6 @@
 package me.weishu.kernelsu.ui.screen
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -25,6 +26,9 @@ import androidx.compose.material.icons.filled.Compress
 import androidx.compose.material.icons.filled.ContactPage
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.FormatColorFill
+import androidx.compose.material.icons.filled.InvertColors
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.RemoveModerator
@@ -129,6 +133,8 @@ fun SettingScreen(navigator: DestinationsNavigator) {
 
             val context = LocalContext.current
             val scope = rememberCoroutineScope()
+            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val activity = LocalContext.current as Activity
 
             val exportBugreportLauncher = rememberLauncherForActivityResult(
                 ActivityResultContracts.CreateDocument("application/gzip")
@@ -170,12 +176,46 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 }
             }
 
-            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
             var checkUpdate by rememberSaveable {
                 mutableStateOf(
                     prefs.getBoolean("check_update", false)
                 )
             }
+
+            // Night Mode Follow System
+            var nightFollowSystem by rememberSaveable {
+                mutableStateOf(
+                    prefs.getBoolean("night_mode_follow_sys", true)
+                )
+            }
+            SwitchItem(
+                icon = Icons.Filled.InvertColors,
+                title = stringResource(id = R.string.settings_night_mode_follow_sys),
+                summary = stringResource(id = R.string.settings_night_mode_follow_sys_summary),
+                checked = nightFollowSystem
+            ) {
+                prefs.edit().putBoolean("night_mode_follow_sys", it).apply()
+                nightFollowSystem = it
+                activity.recreate()
+            }
+            // Custom Night Theme Switch
+            if (!nightFollowSystem) {
+                var nightThemeEnabled by rememberSaveable {
+                    mutableStateOf(
+                        prefs.getBoolean("night_mode_enabled", false)
+                    )
+                }
+                SwitchItem(
+                    icon = Icons.Filled.DarkMode,
+                    title = stringResource(id = R.string.settings_night_theme_enabled),
+                    checked = nightThemeEnabled
+                ) {
+                    prefs.edit().putBoolean("night_mode_enabled", it).apply()
+                    nightThemeEnabled = it
+                    activity.recreate()
+                }
+            }
+
             SwitchItem(
                 icon = Icons.Filled.Update,
                 title = stringResource(id = R.string.settings_check_update),
